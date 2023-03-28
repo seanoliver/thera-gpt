@@ -1,10 +1,12 @@
 import os
 import openai
+import json
 from dotenv import load_dotenv
 
 
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
+
 
 class Thought:
     """
@@ -19,20 +21,38 @@ class Thought:
     def fetch_distortions(self):
 
         response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system",
-             "content": """You are a therapist trained in cognitive behavioral
-                        therapy. Your role is to help people by interpreting
-                        their negative, self-defeating thoughts, identifying
-                        and explaining potential cognitive distortions in those
-                        thoughts, and providing some suggestions for strategies
-                        to reframe their thinking."""},
-            {"role": "user",
-             "content": f"""Please list and briefly explain each of the
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system",
+                 "content": os.getenv('SYSTEM_PROMPT')},
+                {"role": "user",
+                 "content": f"""Please list and briefly explain each of the
                          cognitive distortions you that you can find in this
                          thought: {self.thought}"""}
             ]
         )
 
-        return response['choices'][0]['message']['content']
+        response_string = response['choices'][0]['message']['content']
+
+        self.distortions = json.loads(response_string)
+
+        return self.distortions
+
+    def fetch_strategies(self):
+
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system",
+                 "content": os.getenv('SYSTEM_PROMPT')},
+                {"role": "user",
+                 "content": f"""Please come up with a strategy for reframing my
+                         thinking around each of these distortions:
+                         {self.distortions}. Please keep in mind my original
+                         thought: {self.thought}."""}
+            ]
+        )
+
+        self.strategies = response['choices'][0]['message']['content']
+
+        return self.strategies
