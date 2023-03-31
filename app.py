@@ -5,11 +5,11 @@ from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 
 from forms import NewThoughtForm
-from models import db, connect_db, Thought
+from models import Thought
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 # app.config['SQLALCHEMY_ECHO'] = False
