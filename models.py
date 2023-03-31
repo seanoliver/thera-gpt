@@ -106,3 +106,4 @@ class Thought:
     #     self.reframed_thoughts = response['choices'][0]['message']['content']
 
     #     return self.reframed_thoughts
+

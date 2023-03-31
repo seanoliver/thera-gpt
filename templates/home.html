@@ -1,7 +1,8 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
 	<div class="row justify-content-center mt-5">
-		<div class="col-6">
+		<div class="col-sm-12 col-md-8 col-xl-6">
+
 			<div class="card">
 				<div class="card-title text-center">
 					<h4 class="card-title mt-5">TheraGPT</h4>
@@ -27,15 +28,9 @@
 					</form>
 				</div>
 			</div>
+
+			<div id="output"></div>
 		</div>
-	</div>
-</div>
-<div
-	id="outer-output"
-	class="row justify-content-center m-3"
->
-	<div class="col-6">
-		<div id="output"></div>
 	</div>
 </div>
 

@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from flask import Flask, render_template, request, flash, redirect, session, g
+from flask import Flask, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 
 from forms import NewThoughtForm
@@ -40,5 +40,4 @@ def results_page():
 
         thought = Thought(thought=form.thought.data)
         thought.fetch_distortions()
-
         return thought.distortions
