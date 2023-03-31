@@ -38,7 +38,8 @@ registerColorSchemeListener();
 /* ========================================================================== */
 
 const form = document.getElementById('thought-form');
-const output = document.getElementById('output');
+const spinner = document.getElementById('spinner');
+const resultAccordion = document.getElementById('result-accordion');
 
 // Add submit event listener to the form
 form.addEventListener('submit', event => {
@@ -46,7 +47,7 @@ form.addEventListener('submit', event => {
 
 	// Extract data from form fields
 	const formData = new FormData(form);
-	toggle_loading_spinner();
+	toggleLoadingSpinner();
 
 	// Send POST request to server
 	fetch('/results', {
@@ -56,70 +57,90 @@ form.addEventListener('submit', event => {
 		.then(response => response.json()) // Parse response as JSON
 		.then(data => {
 			// Clear spinner, print result on page
-			toggle_loading_spinner();
-			print_list_of_distortions(data);
+			toggleLoadingSpinner();
+			generateAccordion(data);
 		})
 		.catch(error => {
 			console.error('Error:', error);
-			toggle_loading_spinner();
-			output.innerHTML = 'An error occurred while submitting the form';
+			toggleLoadingSpinner();
+			resultAccordion.innerHTML = 'An error occurred while submitting the form';
 		});
 });
 
-function toggle_loading_spinner() {
-	output.innerHTML = '';
-	output.classList.toggle('spinner-border');
-	output.classList.toggle('text-center');
+function toggleLoadingSpinner() {
+	spinner.innerHTML = '';
+	resultAccordion.innerHTML = '';
+	spinner.classList.toggle('spinner-border');
 }
 
-function print_list_of_distortions(data) {
+function generateAccordion(data) {
+	let index = 0;
 	for (const distortion in data) {
-        console.debug('distortion', distortion);
-        console.debug('data', data);
-		output.append(
-            print_distortion_item(
-                distortion,
-                data[distortion].explanation,
-                data[distortion].strategies,
-                data[distortion].reframed_thought));
+		const accordionItem = createAccordionItem(
+			index,
+			distortion,
+			data[distortion].explanation,
+			data[distortion].strategies,
+			data[distortion].reframed_thought
+		);
+		resultAccordion.append(accordionItem);
+		index++;
 	}
 }
+function createAccordionItem(
+	index,
+	distortion,
+	explanation,
+	strategies,
+	reframed_thought
+) {
+	const itemId = `panelsStayOpen-collapse${index + 1}`;
 
-function print_distortion_item(distortion, explanation, strategies, reframed_thought) {
-    const dl = document.createElement('dl');
-    dl.classList.add('row');
+	const accordionItem = document.createElement('div');
+	accordionItem.className = 'accordion-item';
 
-    const dt_distortion = document.createElement('dt');
-    const dt_explanation = document.createElement('dt');
-    const dt_strategies = document.createElement('dt');
-    const dt_reframed_thought = document.createElement('dt');
+	const accordionHeader = document.createElement('h2');
+	accordionHeader.className = 'accordion-header';
 
-    dt_distortion.innerText = "Distortion";
-    dt_explanation.innerText = "Explanation";
-    dt_strategies.innerText = "Strategies";
-    dt_reframed_thought.innerText = "Reframed Thought";
+	const accordionButton = document.createElement('button');
+	accordionButton.className =
+		index === 0 ? 'accordion-button' : 'accordion-button collapsed';
+	accordionButton.setAttribute('type', 'button');
+	accordionButton.setAttribute('data-bs-toggle', 'collapse');
+	accordionButton.setAttribute('data-bs-target', `#${itemId}`);
+	accordionButton.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
+	accordionButton.setAttribute('aria-controls', itemId);
+	accordionButton.innerText = distortion;
 
+	const accordionCollapse = document.createElement('div');
+	accordionCollapse.className =
+		index === 0
+			? 'accordion-collapse collapse show'
+			: 'accordion-collapse collapse';
+	accordionCollapse.id = itemId;
 
-    const dd_distortion = document.createElement('dd');
-    const dd_explanation = document.createElement('dd');
-    const dd_strategies = document.createElement('dd');
-    const dd_reframed_thought = document.createElement('dd');
+	const accordionBody = document.createElement('div');
+	accordionBody.className = 'accordion-body';
 
-    dd_distortion.innerText = distortion;
-    dd_explanation.innerText = explanation;
-    dd_strategies.innerText = strategies;
-    dd_reframed_thought.innerText = reframed_thought;
+	const explanationSection = document.createElement('div');
+	explanationSection.innerHTML = `<strong>Explanation</strong><p>${explanation}</p>`;
 
-    dl.append(dt_distortion);
-    dl.append(dd_distortion);
-    dl.append(dt_explanation);
-    dl.append(dd_explanation);
-    dl.append(dt_strategies);
-    dl.append(dd_strategies);
-    dl.append(dt_reframed_thought);
-    dl.append(dd_reframed_thought);
+	const strategiesSection = document.createElement('div');
+	strategiesSection.innerHTML = `<strong>Strategies</strong><p>${strategies}</p>`;
 
-	return dl;
+	const reframedThoughtSection = document.createElement('div');
+	reframedThoughtSection.innerHTML = `<strong>Reframed Thought</strong><p>${reframed_thought}</p>`;
+
+	accordionBody.appendChild(explanationSection);
+	accordionBody.appendChild(strategiesSection);
+	accordionBody.appendChild(reframedThoughtSection);
+
+	accordionHeader.appendChild(accordionButton);
+	accordionItem.appendChild(accordionHeader);
+	accordionCollapse.appendChild(accordionBody);
+	accordionItem.appendChild(accordionCollapse);
+
+	return accordionItem;
 }
 
 /* ========================================================================== */
