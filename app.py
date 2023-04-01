@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from forms import NewThoughtForm
@@ -31,7 +31,7 @@ def homepage():
     return render_template('home.html', form=form)
 
 
-@app.route('/results', methods=["GET", "POST"])
+@app.route('/results', methods=["POST"])
 def results_page():
 
     form = NewThoughtForm()
@@ -40,4 +40,5 @@ def results_page():
 
         thought = Thought(thought=form.thought.data)
         thought.fetch_distortions()
-        return thought.distortions
+        return jsonify(thought.distortions)
+

@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row justify-content-center mt-5">
 		<div class="col-sm-12 col-md-8 col-xl-6">
-			<div class="card">
+			<div class="card text-bg-light">
 				<div class="card-title text-center">
 					<h4 class="card-title mt-5">TheraGPT</h4>
 					<h6 class="card-subtitle mb-2 text-body-secondary">
@@ -13,18 +13,16 @@
 				<div class="card-body">
 					<form
 						id="thought-form"
-						method="POST"
 						class="m-3"
 					>
 						{{ form.csrf_token }}
 						<div>
-							{% if form.thought.errors %} {% for error in form.thought.errors
-							%}
+							{% if form.thought.errors %} {% for error in form.thought.errors %}
 							<span class="text-danger"> {{ error }} </span>
-							{% endfor %} {% endif %} {{ form.thought(placeholder="What has
-							been troubling you?", class="form-control", rows="3") }}
+							{% endfor %} {% endif %}
+							{{ form.thought(placeholder="What has been troubling you?", class="form-control", rows="3") }}
 						</div>
-						<button class="btn btn-outline-success m-3">Submit</button>
+						<button type="submit" class="btn btn-outline-success m-3">Submit</button>
 					</form>
 				</div>
 			</div>
@@ -33,15 +31,12 @@
 				class="text-center"
 			></div>
 
-			<section
+			<div
 				id="result"
 				class="mt-5"
 			>
-				<div
-					class="accordion"
-					id="result-accordion"
-				></div>
-			</section>
+
+		</div>
 		</div>
 	</div>
 </div>

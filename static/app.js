@@ -39,11 +39,12 @@ registerColorSchemeListener();
 
 const form = document.getElementById('thought-form');
 const spinner = document.getElementById('spinner');
-const resultAccordion = document.getElementById('result-accordion');
+const result = document.getElementById('result');
 
 // Add submit event listener to the form
 form.addEventListener('submit', event => {
 	event.preventDefault();
+	// console.debug('inside event listener');
 
 	// Extract data from form fields
 	const formData = new FormData(form);
@@ -63,84 +64,77 @@ form.addEventListener('submit', event => {
 		.catch(error => {
 			console.error('Error:', error);
 			toggleLoadingSpinner();
-			resultAccordion.innerHTML = 'An error occurred while submitting the form';
+			result.innerHTML = 'An error occurred while submitting the form';
 		});
 });
 
 function toggleLoadingSpinner() {
 	spinner.innerHTML = '';
-	resultAccordion.innerHTML = '';
+	result.innerHTML = '';
 	spinner.classList.toggle('spinner-border');
 }
 
 function generateAccordion(data) {
-	let index = 0;
 	for (const distortion in data) {
-		const accordionItem = createAccordionItem(
-			index,
+		const cardItem = createAccordionItem(
 			distortion,
 			data[distortion].explanation,
 			data[distortion].strategies,
 			data[distortion].reframed_thought
 		);
-		resultAccordion.append(accordionItem);
-		index++;
+		result.append(cardItem);
 	}
 }
 function createAccordionItem(
-	index,
 	distortion,
 	explanation,
 	strategies,
 	reframed_thought
 ) {
-	const itemId = `panelsStayOpen-collapse${index + 1}`;
+	const card = document.createElement('div');
+	card.classList.add('card', 'text-bg-light');
 
-	const accordionItem = document.createElement('div');
-	accordionItem.className = 'accordion-item';
+	const cardBody = document.createElement('div');
+	cardBody.classList.add('card-body');
 
-	const accordionHeader = document.createElement('h2');
-	accordionHeader.className = 'accordion-header';
+	const title = document.createElement('h5');
+	title.classList.add('card-title');
+	title.innerText = distortion;
 
-	const accordionButton = document.createElement('button');
-	accordionButton.className =
-		index === 0 ? 'accordion-button' : 'accordion-button collapsed';
-	accordionButton.setAttribute('type', 'button');
-	accordionButton.setAttribute('data-bs-toggle', 'collapse');
-	accordionButton.setAttribute('data-bs-target', `#${itemId}`);
-	accordionButton.setAttribute('aria-expanded', index === 0 ? 'true' : 'false');
-	accordionButton.setAttribute('aria-controls', itemId);
-	accordionButton.innerText = distortion;
+	const eCard = createSubCard('Explanation', explanation);
+	const sCard = createSubCard('Strategies', strategies);
+	const rCard = createSubCard('Reframed Thought', reframed_thought);
 
-	const accordionCollapse = document.createElement('div');
-	accordionCollapse.className =
-		index === 0
-			? 'accordion-collapse collapse show'
-			: 'accordion-collapse collapse';
-	accordionCollapse.id = itemId;
+	cardBody.append(title);
+	cardBody.append(eCard);
+	cardBody.append(sCard);
+	cardBody.append(rCard);
 
-	const accordionBody = document.createElement('div');
-	accordionBody.className = 'accordion-body';
+	card.append(cardBody);
 
-	const explanationSection = document.createElement('div');
-	explanationSection.innerHTML = `<strong>Explanation</strong><p>${explanation}</p>`;
+	return card;
+}
 
-	const strategiesSection = document.createElement('div');
-	strategiesSection.innerHTML = `<strong>Strategies</strong><p>${strategies}</p>`;
+function createSubCard(title, description) {
+	const card = document.createElement('div');
+	card.classList.add('card', 'mt-3');
 
-	const reframedThoughtSection = document.createElement('div');
-	reframedThoughtSection.innerHTML = `<strong>Reframed Thought</strong><p>${reframed_thought}</p>`;
+	const cardBody = document.createElement('div');
+	cardBody.classList.add('card-body');
 
-	accordionBody.appendChild(explanationSection);
-	accordionBody.appendChild(strategiesSection);
-	accordionBody.appendChild(reframedThoughtSection);
+	const subhead = document.createElement('h6');
+	subhead.classList.add('card-subtitle', 'mb-2', 'text-body-secondary');
+	subhead.innerText = title;
 
-	accordionHeader.appendChild(accordionButton);
-	accordionItem.appendChild(accordionHeader);
-	accordionCollapse.appendChild(accordionBody);
-	accordionItem.appendChild(accordionCollapse);
+	const paragraph = document.createElement('p');
+	paragraph.classList.add('card-text');
+	paragraph.innerText = description;
 
-	return accordionItem;
+	cardBody.append(subhead);
+	cardBody.append(paragraph);
+	card.append(cardBody);
+
+	return card;
 }
 
 /* ========================================================================== */
