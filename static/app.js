@@ -85,6 +85,7 @@ function generateAccordion(data) {
 		result.append(cardItem);
 	}
 }
+
 function createAccordionItem(
 	distortion,
 	explanation,
@@ -92,7 +93,7 @@ function createAccordionItem(
 	reframed_thought
 ) {
 	const card = document.createElement('div');
-	card.classList.add('card', 'text-bg-light');
+	card.classList.add('card', 'mb-5');
 
 	const cardBody = document.createElement('div');
 	cardBody.classList.add('card-body');
@@ -139,4 +140,14 @@ function createSubCard(title, description) {
 
 /* ========================================================================== */
 /* END Form Submission                                                        */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/* START Hover Listener                                                       */
+/* ========================================================================== */
+
+// ...
+
+/* ========================================================================== */
+/* END Hover Listener                                                         */
 /* ========================================================================== */

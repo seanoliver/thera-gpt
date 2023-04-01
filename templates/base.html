@@ -17,19 +17,30 @@
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
 			rel="stylesheet"
-			integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-			crossorigin="anonymous"
+		/>
+		<link
+			href="/static/styles.css"
+			rel="stylesheet"
 		/>
 		<title>TheraGPT</title>
 	</head>
-	<body>
+	<body class="d-flex flex-column justify-content-between min-vh-100">
+		<div class="container flex-grow-1">
 		{% block content %} {% endblock %}
-
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-			crossorigin="anonymous"
-		></script>
+	</div>
+		<footer class="dark-bg-subtle py-3">
+			<div class="container">
+				<p class="text-center mb-0">
+					Made with ♥ by
+					<a
+						href="https://twitter.com/seanoliver"
+						target="_blank"
+						>@SeanOliver</a
+					>.
+				</p>
+			</div>
+		</footer>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="/static/app.js"></script>
 	</body>
 </html>
