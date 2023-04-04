@@ -1,0 +1,24 @@
+.card {
+	background-color: var(--bs-light-bg-subtle);
+}
+
+.subcard {
+    background-color: red;
+}
+
+/* .gradient-text {
+	position: relative;
+	color: transparent;
+} */
+
+/* .gradient-text::before {
+	content: attr(data-text);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	background-image: linear-gradient(to right, #c33764, #1d2671);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+} */

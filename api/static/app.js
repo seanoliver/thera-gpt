@@ -29,9 +29,7 @@ function registerColorSchemeListener() {
 setThemePreference();
 registerColorSchemeListener();
 
-/* ========================================================================== */
-/* END Dark/Light Mode Switcher                                               */
-/* ========================================================================== */
+/* END Dark/Light Mode Switcher --------------------------------------------- */
 
 /* ========================================================================== */
 /* START Form Submission                                                      */
@@ -118,7 +116,7 @@ function createAccordionItem(
 
 function createSubCard(title, description) {
 	const card = document.createElement('div');
-	card.classList.add('card', 'mt-3');
+	card.classList.add('card', 'mt-3', 'subcard');
 
 	const cardBody = document.createElement('div');
 	cardBody.classList.add('card-body');
@@ -138,16 +136,17 @@ function createSubCard(title, description) {
 	return card;
 }
 
-/* ========================================================================== */
-/* END Form Submission                                                        */
-/* ========================================================================== */
+/* END Form Submission ------------------------------------------------------ */
 
 /* ========================================================================== */
 /* START Hover Listener                                                       */
 /* ========================================================================== */
 
-// ...
+document.addEventListener('mouseover', function (event) {
+	let targetElement = event.target;
+	if (targetElement.classList.contains('subcard')) {
+		
+	}
+});
 
-/* ========================================================================== */
-/* END Hover Listener                                                         */
-/* ========================================================================== */
+/* END Hover Listener ------------------------------------------------------- */

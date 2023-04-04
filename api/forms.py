@@ -10,3 +10,4 @@ class NewThoughtForm(FlaskForm):
         'Thought',
         validators=[DataRequired()],
     )
+ 

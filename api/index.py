@@ -2,10 +2,10 @@ import os
 from dotenv import load_dotenv
 
 from flask import Flask, render_template, jsonify
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
-from forms import NewThoughtForm
-from models import Thought
+from api.forms import NewThoughtForm
+from api.models import Thought
 
 load_dotenv()
 
@@ -15,7 +15,7 @@ app = Flask(__name__, static_folder='static')
 # app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-toolbar = DebugToolbarExtension(app)
+# toolbar = DebugToolbarExtension(app)
 
 # connect_db(app)
 
