@@ -9,10 +9,12 @@ and responses based on the principles of CBT.
 
 ## TODO
 
-- [ ] Deploy to Vercel
+- [X] Deploy to Render
+- [ ] Add Header Image
 - [ ] Add TheraGPT FAQ
 - [ ] Add CBT FAQ
 - [ ] Add "About" Page
+- [ ] Add Count of Thought Traps in List
 - [ ] Enable streaming for data packets so results populate IRT
 - [ ] Add some way to save / export thought + CBT guidance
 - [ ] Enable user to add personal reflections on results
