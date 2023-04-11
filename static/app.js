@@ -4,30 +4,30 @@
 /* START Dark/Light Mode Switcher                                             */
 /* ========================================================================== */
 
-/**
- * Sets the theme color based on the user's preferences.
- */
-function setThemePreference() {
-	const prefersDarkMode = window.matchMedia(
-		'(prefers-color-scheme: dark)'
-	).matches;
-	document.documentElement.setAttribute(
-		'data-bs-theme',
-		prefersDarkMode ? 'dark' : 'light'
-	);
-}
+// /**
+//  * Sets the theme color based on the user's preferences.
+//  */
+// function setThemePreference() {
+// 	const prefersDarkMode = window.matchMedia(
+// 		'(prefers-color-scheme: dark)'
+// 	).matches;
+// 	document.documentElement.setAttribute(
+// 		'data-bs-theme',
+// 		prefersDarkMode ? 'dark' : 'light'
+// 	);
+// }
 
-/**
- * Adds an event listener to the color scheme to call setThemePreference every
- * time user changes their preferred color scheme.
- */
-function registerColorSchemeListener() {
-	const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-	colorSchemeQuery.addEventListener('change', setThemePreference);
-}
+// /**
+//  * Adds an event listener to the color scheme to call setThemePreference every
+//  * time user changes their preferred color scheme.
+//  */
+// function registerColorSchemeListener() {
+// 	const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+// 	colorSchemeQuery.addEventListener('change', setThemePreference);
+// }
 
-setThemePreference();
-registerColorSchemeListener();
+// setThemePreference();
+// registerColorSchemeListener();
 
 /* END Dark/Light Mode Switcher --------------------------------------------- */
 
@@ -97,7 +97,7 @@ function createAccordionItem(
 	cardBody.classList.add('card-body');
 
 	const title = document.createElement('h5');
-	title.classList.add('card-title');
+	title.classList.add('card-title', 'border-primary');
 	title.innerText = distortion;
 
 	const eCard = createSubCard('Explanation', explanation);
@@ -145,7 +145,7 @@ function createSubCard(title, description) {
 document.addEventListener('mouseover', function (event) {
 	let targetElement = event.target;
 	if (targetElement.classList.contains('subcard')) {
-		
+
 	}
 });
 
