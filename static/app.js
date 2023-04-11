@@ -39,6 +39,28 @@ const form = document.getElementById('thought-form');
 const spinner = document.getElementById('spinner');
 const result = document.getElementById('result');
 
+// Function to send POST request and retry if it fails
+function sendPostRequest(url, body, retries = 3) {
+	return fetch(url, {
+			method: 'POST',
+			body: body,
+	})
+			.then(response => {
+					if (!response.ok) {
+							throw new Error(`HTTP error: ${response.status}`);
+					}
+					return response.json();
+			})
+			.catch(async error => {
+					if (retries === 0) {
+							throw error;
+					}
+					console.warn('Retrying request:', error);
+					await new Promise(resolve => setTimeout(resolve, 1000));
+					return sendPostRequest(url, body, retries - 1);
+			});
+}
+
 // Add submit event listener to the form
 form.addEventListener('submit', event => {
 	event.preventDefault();
@@ -48,23 +70,20 @@ form.addEventListener('submit', event => {
 	const formData = new FormData(form);
 	toggleLoadingSpinner();
 
-	// Send POST request to server
-	fetch('/results', {
-		method: 'POST',
-		body: formData,
-	})
-		.then(response => response.json()) // Parse response as JSON
-		.then(data => {
-			// Clear spinner, print result on page
-			toggleLoadingSpinner();
-			generateAccordion(data);
-		})
-		.catch(error => {
-			console.error('Error:', error);
-			toggleLoadingSpinner();
-			result.innerHTML = 'An error occurred while submitting the form';
-		});
+	// Send POST request to server with retries
+	sendPostRequest('/results', formData)
+			.then(data => {
+					// Clear spinner, print result on page
+					toggleLoadingSpinner();
+					generateAccordion(data);
+			})
+			.catch(error => {
+					console.error('Error:', error);
+					toggleLoadingSpinner();
+					result.innerHTML = 'An error occurred while submitting the form';
+			});
 });
+
 
 function toggleLoadingSpinner() {
 	spinner.innerHTML = '';
