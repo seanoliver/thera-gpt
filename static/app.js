@@ -133,6 +133,13 @@ function createAccordionItem(
 	return card;
 }
 
+/**
+ * Constructs the HTML elements for a "sub-card" of a cognitive distortion card.
+ *
+ * @param {String} title
+ * @param {String} description
+ * @returns {HTMLElement} HTML for the resulting subcard.
+ */
 function createSubCard(title, description) {
 	const card = document.createElement('div');
 	card.classList.add('card', 'mt-3', 'subcard');
