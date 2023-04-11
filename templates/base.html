@@ -115,6 +115,20 @@
 			property="twitter:image"
 			content="https://theragpt.onrender.com/static/images/social_share_image.png"
 		/>
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-S4R8QD6ZL2"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+
+			gtag('config', 'G-S4R8QD6ZL2');
+		</script>
 	</head>
 	<body class="d-flex flex-column justify-content-between min-vh-100">
 		<div class="container flex-grow-1">{% block content %} {% endblock %}</div>
