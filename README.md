@@ -10,7 +10,10 @@ and responses based on the principles of CBT.
 ## TODO
 
 - [X] Deploy to Render
-- [ ] Add Header Image
+- [X] Add Header Image
+- [X] Adjust color theme to better match image
+- [X] Nicer design for front page
+- [ ] Nicer design for thinking traps explanation section
 - [ ] Add TheraGPT FAQ
 - [ ] Add CBT FAQ
 - [ ] Add "About" Page
