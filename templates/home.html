@@ -2,10 +2,14 @@
 <div class="container">
 	<div class="row justify-content-center mt-5">
 		<div class="col-sm-12 col-md-8 col-xl-6">
-			<div class="card border-secondary">
+			<div class="card">
 				<div class="card-title text-center">
-					<img src="/static/images/theragpt1.png" class="card-img-top" alt="TheraGPT logo">
-					<h4 class="card-title mt-5 gradient-text">TheraGPT</h4>
+					<img
+						src="/static/images/theragpt1.png"
+						class="card-img-top"
+						alt="TheraGPT logo"
+					/>
+					<h4 class="card-title mt-5 animate-gradient-text">TheraGPT</h4>
 					<h6 class="card-subtitle mb-2 text-body-secondary">
 						Your AI companion for a balanced and resilient mind.
 					</h6>
@@ -18,26 +22,30 @@
 					>
 						{{ form.csrf_token }}
 						<div>
-							{% if form.thought.errors %} {% for error in form.thought.errors %}
+							{% if form.thought.errors %} {% for error in form.thought.errors
+							%}
 							<span class="text-danger"> {{ error }} </span>
-							{% endfor %} {% endif %}
-							{{ form.thought(placeholder="What has been troubling you?", class="form-control", rows="3") }}
+							{% endfor %} {% endif %} {{ form.thought(placeholder="What has been troubling you?", class="form-control border-gradient border-gradient-purple", rows="3") }}
 						</div>
-						<button type="submit" class="btn btn-outline-success m-3">Submit</button>
+						<div class="d-flex justify-content-center m-3 buttons">
+							<button
+								type="submit"
+								class="btn btn-lg btn-hover gradient-btn"
+							>
+								Submit
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>
-			<div
-				id="spinner"
-				class="text-center"
-			></div>
+			<div class="spinner-container">
+				<div id="spinner" class="text-center"></div>
+			</div>
 
 			<div
 				id="result"
 				class="mt-5"
-			>
-
-		</div>
+			></div>
 		</div>
 	</div>
 </div>
