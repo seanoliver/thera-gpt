@@ -42,23 +42,23 @@ const result = document.getElementById('result');
 // Function to send POST request and retry if it fails
 function sendPostRequest(url, body, retries = 3) {
 	return fetch(url, {
-			method: 'POST',
-			body: body,
+		method: 'POST',
+		body: body,
 	})
-			.then(response => {
-					if (!response.ok) {
-							throw new Error(`HTTP error: ${response.status}`);
-					}
-					return response.json();
-			})
-			.catch(async error => {
-					if (retries === 0) {
-							throw error;
-					}
-					console.warn('Retrying request:', error);
-					await new Promise(resolve => setTimeout(resolve, 1000));
-					return sendPostRequest(url, body, retries - 1);
-			});
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`HTTP error: ${response.status}`);
+			}
+			return response.json();
+		})
+		.catch(async error => {
+			if (retries === 0) {
+				throw error;
+			}
+			console.warn('Retrying request:', error);
+			await new Promise(resolve => setTimeout(resolve, 1000));
+			return sendPostRequest(url, body, retries - 1);
+		});
 }
 
 // Add submit event listener to the form
@@ -66,24 +66,42 @@ form.addEventListener('submit', event => {
 	event.preventDefault();
 	// console.debug('inside event listener');
 
+	// Send the event data to Google Analytics
+	gtag('event', 'submit', {
+		event_category: 'Form',
+		event_label: 'Submitted Thought',
+	});
+
 	// Extract data from form fields
 	const formData = new FormData(form);
 	toggleLoadingSpinner();
 
 	// Send POST request to server with retries
 	sendPostRequest('/results', formData)
-			.then(data => {
-					// Clear spinner, print result on page
-					toggleLoadingSpinner();
-					generateAccordion(data);
-			})
-			.catch(error => {
-					console.error('Error:', error);
-					toggleLoadingSpinner();
-					result.innerHTML = 'An error occurred while submitting the form';
-			});
-});
+		.then(data => {
+			// Clear spinner, print result on page
+			toggleLoadingSpinner();
+			generateAccordion(data);
 
+			// Send the event data to Google Analytics
+			gtag('event', 'load', {
+				event_category: 'Page',
+				event_label: 'Successfully Loaded Thoughts',
+			});
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			toggleLoadingSpinner();
+
+			// Send the event data to Google Analytics
+			gtag('event', 'error', {
+				event_category: 'Error',
+				event_label: `Error: ${error}`,
+			});
+
+			result.innerHTML = `Apologies for the inconvenience! We've encountered an issue, kindly refresh the page and give it another try.`;
+		});
+});
 
 function toggleLoadingSpinner() {
 	spinner.innerHTML = '';
@@ -171,7 +189,6 @@ function createSubCard(title, description) {
 document.addEventListener('mouseover', function (event) {
 	let targetElement = event.target;
 	if (targetElement.classList.contains('subcard')) {
-
 	}
 });
 
