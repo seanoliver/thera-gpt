@@ -61,6 +61,13 @@ function sendPostRequest(url, body, retries = 3) {
 		});
 }
 
+form.addEventListener('keydown', function(event) {
+	if (event.keycode === 13) {
+		event.preventDefault();
+		form.submit();
+	}
+})
+
 // Add submit event listener to the form
 form.addEventListener('submit', event => {
 	event.preventDefault();
