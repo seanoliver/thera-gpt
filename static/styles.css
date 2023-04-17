@@ -99,6 +99,15 @@ input {
 	outline: none;
 }
 
+.nav-underline .nav-link {
+	border-image-slice: 1;
+	border-width: 3px;
+}
+
+.nav-underline .nav-link:hover {
+	border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+}
+
 /* ========================================================================== */
 /* Text Area Border Gradient                                                  */
 /* ========================================================================== */
